@@ -1,0 +1,51 @@
+{% extends "bases/base.html" %}
+
+{% block page_title %}{{ post.name }}{% endblock page_title %}
+
+{% block page_content %}
+<!-- Post content-->
+<article>
+	<!-- Post header-->
+	<header class="mb-4">
+	    <!-- Post title-->
+	    <h1 class="fw-bolder mb-2">{{ post.name }}</h1>
+	    <!-- Post meta content-->
+	    <div class="text-muted fst-italic mb-2">Publicado el {{ post.datetime }} por <a class="text-muted" href="{{ post.author.url }}">{{ post.author }}</a></div>
+	    <!-- Post readings -->
+	    <div class="text-muted fst-italic mb-2">{{ post.readings_counter }} Lecturas</div>
+	    <!-- Post categories-->
+	    {% for category in post.categories.all %}
+	    	<a class="badge bg-secondary text-decoration-none link-light" href="{% url 'blog:category' category.id %}">{{ category.name }}</a>
+	    {% endfor %}
+	</header>
+	<!-- Preview image figure-->
+	<figure class="mb-4"><img class="img-fluid rounded" src="{{ post.image_post.url }}" alt="Imagen del Post" /></figure>
+	<!-- Post content-->
+	<section class="mb-5">
+	    {{ post.text_post | safe }}
+	</section>
+</article>
+<!-- Comments section-->
+<section class="mb-5">
+    <div class="card bg-light">
+        <div class="card-body">
+            <!-- Comment form-->
+            <form class="mb-4" action="{% url 'blog:post' post.id %}" method="post">
+            	{% csrf_token %}
+            	<textarea class="form-control" rows="3" required maxlength="200" placeholder="¡Únete a la conversación enviando un comentario!" name="comment"></textarea>
+            	<input type="submit" value="Enviar" class="btn btn-primary mt-2" id="button-comment">
+            </form>
+            <!-- Single comment-->
+            {% for comment in post.comment_set.all %}
+	            <div class="d-flex mb-4">
+	                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/a86ba8/fff.jpg&text=A" alt="Commenter Image" /></div>
+	                <div class="ms-3">
+	                    <div class="fw-bold">Anonymous {{ comment.id }}</div>
+	                    {{ comment.text_comment }}
+	                </div>
+	            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock page_content %}

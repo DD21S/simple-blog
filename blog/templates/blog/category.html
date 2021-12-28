@@ -1,0 +1,4 @@
+{% extends "blog/posts.html" %}
+
+{% block results_message %}Categoría: {{ category }}{% endblock results_message %}
+{% block no_results_message %}No se han encontrado resultados para "{{ category }}".{% endblock no_results_message %}
