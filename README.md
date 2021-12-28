@@ -9,7 +9,7 @@ This blog aims to be simple, fast and light. Without straying from what a blog i
 First of all, clone this repo.
 
 ``
-git clone https://github.com/DD21S/store-administration
+git clone https://github.com/DD21S/simple-blog.git
 ``
 
 Then, in the project directory, you install the requirements.
